@@ -6,7 +6,7 @@
 /*   By: vveselov <vveselov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 19:35:33 by vveselov          #+#    #+#             */
-/*   Updated: 2018/03/02 14:37:50 by vveselov         ###   ########.fr       */
+/*   Updated: 2018/05/23 18:08:20 by vveselov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <string.h>
 # define MIME "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 # define HEXN "0123456789ABCDEF"
+# define HEXD "0123456789abcdef"
 # define PC1A "\71\61\51\41\31\21\11\1\72\62\52\42\32\22\12\2\73"
 # define PC1B "\63\53\43\33\23\13\3\74\64\54\44\77\67\57\47\37\27\17\7\76\66"
 # define PC1C "\56\46\36\26\16\6\75\65\55\45\35\25\15\5\34\24\14\4"
@@ -84,9 +85,34 @@
 # define RIPB "\66\26\76\36\45\5\55\15\65\25\75\35\44\4\54\14\64\24\74\34\43\3"
 # define RIPC "\53\13\63\23\73\33\42\2\52\12\62\22\72\32\41\1\51\11\61\21\71\31"
 # define RIP RIPA RIPB RIPC
+# define MD5_A 1732584193
+# define MD5_B 4023233417
+# define MD5_C 2562383102
+# define MD5_D 271733878
+# define MD5_SA "\7\14\21\26\7\14\21\26\7\14\21\26\7\14\21\26"
+# define MD5_SB "\5\11\16\24\5\11\16\24\5\11\16\24\5\11\16\24"
+# define MD5_SC "\4\13\20\27\4\13\20\27\4\13\20\27\4\13\20\27"
+# define MD5_SD "\6\12\17\25\6\12\17\25\6\12\17\25\6\12\17\25"
+# define MD5_S MD5_SA MD5_SB MD5_SC MD5_SD
+# define MD5_KA "\0\1\2\3\4\5\6\7\10\11\12\13\14\15\16\17"
+# define MD5_KB "\1\6\13\0\5\12\17\4\11\16\3\10\15\2\7\14"
+# define MD5_KC "\5\10\13\16\1\4\7\12\15\0\3\6\11\14\17\2"
+# define MD5_KD "\0\7\16\5\14\3\12\1\10\17\6\15\4\13\2\11"
+# define MD5_K MD5_KA MD5_KB MD5_KC MD5_KD
+# define SHA256_A 0x6a09e667
+# define SHA256_B 0xbb67ae85
+# define SHA256_C 0x3c6ef372
+# define SHA256_D 0xa54ff53a
+# define SHA256_E 0x510e527f
+# define SHA256_F 0x9b05688c
+# define SHA256_G 0x1f83d9ab
+# define SHA256_H 0x5be0cd19
 
 void					ft_putstr(char *s);
 void					ft_puter(char *s);
+void					ft_putendl(char *s);
+size_t					ft_strlen(char *s);
+char					*word_in_br(char *s);
 char					**des_e(unsigned char **s1, char *s2, int *i, int a);
 char					**plain16(char **s);
 char					**ch_hex(unsigned char *str, char *n, int *k);
@@ -173,5 +199,55 @@ int						shift_base64(int *j, char *res,
 						unsigned char *str, char *key);
 int						new_k(unsigned char *str, int *k);
 int						ft_base64ad(unsigned char *str, char *key, int k1);
+unsigned int			bits_rot(unsigned int n, unsigned int bits);
+void					md_options(char *s);
+void					md_out(char *out, int flags, char *md_str,
+						char *md_name);
+void					md_files(int flags, char **argv, int i,
+						char *(*md_e)(char *argv));
+void					md_stdin(int *flags, char *(*md_e)(char *argv),
+						char *md_name);
+void					md_main(char **argv, char *(*md_e)(char *argv));
+void					len_pad(unsigned long long len, unsigned char **s,
+						int i);
+unsigned char			*md5_pad(char *s, int *size);
+unsigned int			**words_conv(unsigned char *s, int size);
+char					*md5_output_conv(unsigned int abcd[4]);
+char					*md5_e(char *s);
+void					md5_rounds(unsigned int **word, int x,
+						unsigned int *abcd, const unsigned int md5_t[64]);
+void					md5_add_buff(unsigned int abcd[4],
+						unsigned int buff[4]);
+void					md5_process(unsigned int **word, int size,
+						unsigned int abcd[4]);
+void					free_word(unsigned int **word, int size);
+unsigned int			md5_f(unsigned int x, unsigned int y, unsigned int z);
+unsigned int			md5_g(unsigned int x, unsigned int y, unsigned int z);
+unsigned int			md5_h(unsigned int x, unsigned int y, unsigned int z);
+unsigned int			md5_i(unsigned int x, unsigned int y, unsigned int z);
+char					*sha256_e(char *s);
+unsigned int			**sha256_words_conv(unsigned char *s, int size);
+unsigned char			*sha256_pad(char *s, int *size);
+void					sha256_len_pad(unsigned long long len,
+						unsigned char **s, int i);
+void					sha256_process(unsigned int **word, int size,
+						unsigned int hash[8]);
+void					sha256_add_buff(unsigned int hash[8],
+						unsigned int h_cp[8], unsigned int buff[8]);
+void					sha256_set_64w(unsigned int sha256_64w[64],
+						unsigned int *word32);
+void					sha256_set_buff(unsigned int buff[8],
+						unsigned int h_cp[8], unsigned int hash[8]);
+void					sha256_compression(unsigned int h_cp[8],
+						unsigned int sha256_w[64],
+						const unsigned int sha256_k[64]);
+unsigned int			bits_rot_rev(unsigned int n, unsigned int bits);
+unsigned int			sha256_ch(unsigned int x, unsigned int y,
+						unsigned int z);
+unsigned int			sha256_maj(unsigned int x, unsigned int y,
+						unsigned int z);
+unsigned int			sha256_sigma(unsigned int x, int t);
+unsigned int			sha256_delta(unsigned int x, int t);
+void					ft_toupper(char *s);
 
 #endif

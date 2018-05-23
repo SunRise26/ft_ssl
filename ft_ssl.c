@@ -6,7 +6,7 @@
 /*   By: vveselov <vveselov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 19:35:30 by vveselov          #+#    #+#             */
-/*   Updated: 2018/03/02 15:10:09 by vveselov         ###   ########.fr       */
+/*   Updated: 2018/05/23 18:17:54 by vveselov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void			ssl_commands(char *s)
 	ft_puter(s);
 	ft_puter("' is an invalid command.\n\n");
 	ft_puter("Standart commands:\n\n");
-	ft_puter("Message Digest commands:\n\n");
+	ft_puter("Message Digest commands:\nmd5\n\n");
 	ft_puter("Cipher commands:\nbase64\ndes\ndes-ecb\ndes-cbc\
-		\ndes3\ndes3-ecb\ndes3-cbc\n");
+		\ndes3\ndes3-ecb\ndes3-cbc\n\n");
 }
 
 unsigned char	*ft_strj(unsigned char *s1, unsigned char *s2, int i1, int j1)
@@ -60,6 +60,28 @@ unsigned char	*ft_read(int op, int len, int *i)
 	return (str);
 }
 
+int				file_er(int i[2], int o[2], char **argv)
+{
+	if (i[0] == -1)
+	{
+		open(argv[i[1] + 1], O_RDONLY);
+		ft_puter(argv[i[1] + 1]);
+		write(2, ": ", 2);
+		ft_puter(strerror(errno));
+		write(2, "\n", 1);
+		return (1);
+	}
+	else if (o[0] == -1)
+	{
+		ft_puter(argv[o[1] + 1]);
+		write(2, ": ", 2);
+		ft_puter(strerror(errno));
+		write(2, "\n", 1);
+		return (1);
+	}
+	return (0);
+}
+
 int				main(int argc, char *argv[])
 {
 	if (argc < 2)
@@ -76,6 +98,10 @@ int				main(int argc, char *argv[])
 			des3_ecb(argv);
 		else if (!ft_scmp(argv[1], "des3-cbc"))
 			des3_cbc(argv);
+		else if (!ft_scmp(argv[1], "md5"))
+			md_main(argv, &md5_e);
+		else if (!ft_scmp(argv[1], "sha256"))
+			md_main(argv, &sha256_e);
 		else
 			ssl_commands(argv[1]);
 	}
