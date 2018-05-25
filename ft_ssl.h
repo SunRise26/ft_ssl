@@ -6,7 +6,7 @@
 /*   By: vveselov <vveselov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 19:35:33 by vveselov          #+#    #+#             */
-/*   Updated: 2018/05/23 18:08:20 by vveselov         ###   ########.fr       */
+/*   Updated: 2018/05/25 17:06:42 by vveselov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,5 +249,6 @@ unsigned int			sha256_maj(unsigned int x, unsigned int y,
 unsigned int			sha256_sigma(unsigned int x, int t);
 unsigned int			sha256_delta(unsigned int x, int t);
 void					ft_toupper(char *s);
+void					ft_tolower(char *s);
 
 #endif

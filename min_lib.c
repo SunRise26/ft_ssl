@@ -6,7 +6,7 @@
 /*   By: vveselov <vveselov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 18:07:47 by vveselov          #+#    #+#             */
-/*   Updated: 2018/05/23 18:03:50 by vveselov         ###   ########.fr       */
+/*   Updated: 2018/05/25 17:11:55 by vveselov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ void			ft_putendl(char *s)
 	write(1, "\n", 1);
 }
 
+void			free_word(unsigned int **word, int size)
+{
+	int		i;
+
+	i = -1;
+	while (++i < size)
+		free(word[i]);
+	free(word);
+}
+
 char			*word_in_br(char *s)
 {
 	char	*res;
@@ -50,24 +60,4 @@ char			*word_in_br(char *s)
 	res[i++] = '\"';
 	res[i] = '\0';
 	return (res);
-}
-
-void			free_word(unsigned int **word, int size)
-{
-	int		i;
-
-	i = -1;
-	while (++i < size)
-		free(word[i]);
-	free(word);
-}
-
-void			ft_toupper(char *s)
-{
-	int		i;
-
-	i = -1;
-	while (s[++i])
-		if (s[i] >= 'a' && s[i] <= 'z')
-			s[i] -= 32;
 }
