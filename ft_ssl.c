@@ -6,7 +6,7 @@
 /*   By: vveselov <vveselov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 19:35:30 by vveselov          #+#    #+#             */
-/*   Updated: 2018/05/25 17:07:39 by vveselov         ###   ########.fr       */
+/*   Updated: 2018/05/25 17:25:10 by vveselov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,13 @@ unsigned char	*ft_read(int op, int len, int *i)
 
 int				file_er(int i[2], int o[2], char **argv)
 {
-	ft_puter(&argv[0][2]);
-	write(2, ": ", 2);
-	ft_tolower(argv[1]);
-	ft_puter(argv[1]);
-	write(2, ": ", 2);
+	if (i[0] < 0 || o[0] < 0)
+	{
+		ft_puter("ft_ssl: ");
+		ft_tolower(argv[1]);
+		ft_puter(argv[1]);
+		write(2, ": ", 2);
+	}
 	if (i[0] == -1)
 	{
 		open(argv[i[1] + 1], O_RDONLY);
