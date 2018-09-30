@@ -17,10 +17,16 @@ Cipher commands:
 	des3-cbc
 
 des-ecb options example:
-	-i <file>	input file\n
-	-o <file>	output file\n
-	-e		encrypt\n
-	-d		decrypt\n
-	-a		base64 encode/decode\n
-	-k		key in hex is the next argument\n
+	-i <file>	input file
+
+	-o <file>	output file
+
+	-e		encrypt
+
+	-d		decrypt
+
+	-a		base64 encode/decode
+
+	-k		key in hex is the next argument
+
 (Any other options you check by inputting wrong opt (smth like -z))
