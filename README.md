@@ -30,4 +30,4 @@ des-ecb options example:
 
 	-k		key in hex is the next argument
 
-(Any other options you check by inputting wrong opt (smth like -z))
+(Any other options you check by inputting wrong opt for certain command (md5 -z));
